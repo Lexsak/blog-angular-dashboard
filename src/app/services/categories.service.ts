@@ -29,12 +29,24 @@ export class CategoriesService {
       .pipe(
         map((actions) => {
           return actions.map((a) => {
-            const data = a.payload.doc.data() ;
+            const data = a.payload.doc.data();
             const id = a.payload.doc.id;
 
             return { id, data };
           });
         })
       );
+  }
+
+  updateData(id: any, EditData: any) {
+    this.afs.collection('categories').doc(id).update(EditData).then(docRef => {
+      this.toastr.success('Data Updated Successfully');
+    });
+  }
+
+  deleteData(id: string){
+    this.afs.collection('categories').doc(id).delete().then(docRef => {
+      this.toastr.info('Data Deleted..!');
+    })
   }
 }

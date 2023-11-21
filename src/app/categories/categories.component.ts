@@ -11,6 +11,7 @@ export class CategoriesComponent implements OnInit {
   categoryArray: any[] = [];
   formCategory: string = '';
   formStatus: string = 'Add';
+  categoryId: string = '';
 
   constructor(private categoryService: CategoriesService) {}
 
@@ -27,13 +28,24 @@ export class CategoriesComponent implements OnInit {
       category: formData.value.category,
     };
 
-    this.categoryService.saveData(categoryData);
+    if (this.formStatus == 'Add') {
+      this.categoryService.saveData(categoryData);
+    } else if (this.formStatus == 'Edit') {
+      this.categoryService.updateData(this.categoryId, categoryData);
+      formData.reset();
+      this.formStatus = 'Add';
+    }
 
     formData.reset();
   }
 
-  onEdit(category: any) {
-    this.formCategory = category
-    this.formStatus = "Edit"
+  onEdit(category: any, id: string) {
+    this.formCategory = category;
+    this.formStatus = 'Edit';
+    this.categoryId = id;
+  }
+
+  onDelete(id: string) {
+    this.categoryService.deleteData(id);
   }
 }
