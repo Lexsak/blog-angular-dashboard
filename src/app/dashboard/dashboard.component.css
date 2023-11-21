@@ -1,5 +1,11 @@
 .card{
     height: 200px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.card:hover{
+    opacity: 0.5;
 }
 
 mat-icon{
