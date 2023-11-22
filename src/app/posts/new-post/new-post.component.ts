@@ -18,8 +18,13 @@ export class NewPostComponent implements OnInit {
   categories: any = [];
 
   postForm: FormGroup = new FormGroup({});
+  isFormInitialized: boolean = false;
 
   post: any;
+
+  formStatus: string = 'Add New';
+
+  docId: string = '';
 
   constructor(
     private categoryService: CategoriesService,
@@ -28,29 +33,46 @@ export class NewPostComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.queryParams.subscribe((val) => {
-      this.postSerivce.loadOneData(val['id']).subscribe((post) => {
-        this.post = post;
+      this.docId = val['id'];
 
+      if (this.docId) {
+        this.postSerivce.loadOneData(val['id']).subscribe((post) => {
+          this.post = post;
+
+          this.postForm = this.fb.group({
+            title: [
+              this.post.title,
+              [Validators.required, Validators.minLength(10)],
+            ],
+            permalink: [this.post.permalink, Validators.required],
+            exerpt: [
+              this.post.exerpt,
+              [Validators.required, Validators.minLength(50)],
+            ],
+            category: [
+              `${this.post.category.categoryId}-${this.post.category.category}`,
+              Validators.required,
+            ],
+            postImg: ['', Validators.required],
+            content: [this.post.content, Validators.required],
+          });
+
+          this.imgSrc = this.post.postImgPath;
+          this.formStatus = 'Edit';
+          this.isFormInitialized = true; // Oznacz formularz jako zainicjowany
+        });
+      } else {
         this.postForm = this.fb.group({
-          title: [
-            this.post.title,
-            [Validators.required, Validators.minLength(10)],
-          ],
-          permalink: [this.post.permalink, Validators.required],
-          exerpt: [
-            this.post.exerpt,
-            [Validators.required, Validators.minLength(50)],
-          ],
-          category: [
-            `${this.post.category.categoryId}-${this.post.category.category}`,
-            Validators.required,
-          ],
+          title: ['', [Validators.required, Validators.minLength(10)]],
+          permalink: ['', Validators.required],
+          exerpt: ['', [Validators.required, Validators.minLength(50)]],
+          category: ['', Validators.required],
           postImg: ['', Validators.required],
-          content: [this.post.content, Validators.required],
+          content: ['', Validators.required],
         });
 
-        this.imgSrc = this.post.postImgPath
-      });
+        this.isFormInitialized = true;
+      }
     });
   }
 
@@ -104,7 +126,12 @@ export class NewPostComponent implements OnInit {
       createdAt: new Date(),
     };
 
-    this.postSerivce.uploadImage(this.selectedImg, postData);
+    this.postSerivce.uploadImage(
+      this.selectedImg,
+      postData,
+      this.formStatus,
+      this.docId
+    );
     this.postForm.reset();
     this.imgSrc = './assets/placeholder-image.png';
   }

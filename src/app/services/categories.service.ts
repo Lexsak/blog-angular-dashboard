@@ -46,7 +46,7 @@ export class CategoriesService {
 
   deleteData(id: string){
     this.afs.collection('categories').doc(id).delete().then(docRef => {
-      this.toastr.info('Data Deleted..!');
+      this.toastr.warning('Data Deleted..!');
     })
   }
 }

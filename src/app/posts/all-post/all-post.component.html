@@ -51,11 +51,16 @@
                   <button
                     class="btn btn-sm btn-success mr-2"
                     routerLink="/posts/new"
-                    [queryParams]="{id: post.id}"
+                    [queryParams]="{ id: post.id }"
                   >
                     Edit
                   </button>
-                  <button class="btn btn-sm btn-danger">Delete</button>
+                  <button
+                    class="btn btn-sm btn-danger"
+                    (click)="onDelete(post.data.postImgPath, post.id)"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             </tbody>

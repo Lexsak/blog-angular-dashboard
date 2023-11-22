@@ -17,7 +17,7 @@ export class PostsService {
     private router: Router
   ) {}
 
-  uploadImage(selectedImage: any, postData: Post) {
+  uploadImage(selectedImage: any, postData: Post, formStatus: any, id: any) {
     const filePath = `postIMG/${Date.now()}`;
     console.log(filePath);
 
@@ -31,7 +31,11 @@ export class PostsService {
           postData.postImgPath = URL;
           console.log(postData);
 
-          this.saveData(postData);
+          if (formStatus == 'Edit') {
+            this.updateData(id, postData);
+          } else {
+            this.saveData(postData);
+          }
         });
     });
   }
@@ -42,7 +46,7 @@ export class PostsService {
       .add(postData)
       .then((docRef) => {
         this.toastr.success('Data Insert Successfully');
-        this.router.navigate(['/posts'])
+        this.router.navigate(['/posts']);
       });
   }
 
@@ -61,7 +65,35 @@ export class PostsService {
         })
       );
   }
-  loadOneData(id: any){
+  loadOneData(id: any) {
     return this.afs.doc(`posts/${id}`).valueChanges();
+  }
+
+  updateData(id: any, postData: any) {
+    this.afs
+      .doc(`posts/${id}`)
+      .update(postData)
+      .then(() => {
+        this.toastr.success('Data Updated Successfully');
+        this.router.navigate(['/posts']);
+      });
+  }
+
+  deleteImage(postImgPath: string, id: string) {
+    this.storage.storage
+      .refFromURL(postImgPath)
+      .delete()
+      .then(() => {
+        this.deleteData(id);
+      });
+  }
+
+  deleteData(id: string) {
+    this.afs
+      .doc(`posts/${id}`)
+      .delete()
+      .then(() => {
+        this.toastr.warning('Data Deleted..!');
+      });
   }
 }
