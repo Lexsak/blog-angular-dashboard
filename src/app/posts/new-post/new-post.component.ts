@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Post } from 'src/app/models/post';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { PostsService } from 'src/app/services/posts.service';
@@ -16,20 +17,40 @@ export class NewPostComponent implements OnInit {
 
   categories: any = [];
 
-  postForm: FormGroup;
+  postForm: FormGroup = new FormGroup({});
+
+  post: any;
 
   constructor(
     private categoryService: CategoriesService,
     private fb: FormBuilder,
-    private postSerivce: PostsService
+    private postSerivce: PostsService,
+    private route: ActivatedRoute
   ) {
-    this.postForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(10)]],
-      permalink: ['', Validators.required],
-      exerpt: ['', [Validators.required, Validators.minLength(50)]],
-      category: ['', Validators.required],
-      postImg: ['', Validators.required],
-      content: ['', Validators.required],
+    this.route.queryParams.subscribe((val) => {
+      this.postSerivce.loadOneData(val['id']).subscribe((post) => {
+        this.post = post;
+
+        this.postForm = this.fb.group({
+          title: [
+            this.post.title,
+            [Validators.required, Validators.minLength(10)],
+          ],
+          permalink: [this.post.permalink, Validators.required],
+          exerpt: [
+            this.post.exerpt,
+            [Validators.required, Validators.minLength(50)],
+          ],
+          category: [
+            `${this.post.category.categoryId}-${this.post.category.category}`,
+            Validators.required,
+          ],
+          postImg: ['', Validators.required],
+          content: [this.post.content, Validators.required],
+        });
+
+        this.imgSrc = this.post.postImgPath
+      });
     });
   }
 
@@ -45,8 +66,10 @@ export class NewPostComponent implements OnInit {
 
   onTitleChanged() {
     this.postForm.get('title')?.valueChanges.subscribe((title) => {
-      this.permalink = title.replace(/\s/g, '-');
-      this.postForm.get('permalink')?.setValue(this.permalink);
+      if (title !== null && title !== undefined) {
+        this.permalink = title.replace(/\s/g, '-');
+        this.postForm.get('permalink')?.setValue(this.permalink);
+      }
     });
   }
 
@@ -60,11 +83,10 @@ export class NewPostComponent implements OnInit {
     this.selectedImg = $event.target.files[0];
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.postForm.value);
 
     let splitted = this.postForm.value.category.split('-');
-    
 
     const postData: Post = {
       title: this.postForm.value.title,
@@ -81,8 +103,9 @@ export class NewPostComponent implements OnInit {
       status: 'new',
       createdAt: new Date(),
     };
-    
-    this.postSerivce.uploadImage(this.selectedImg , postData)
-    this.postForm.reset()
-  };
+
+    this.postSerivce.uploadImage(this.selectedImg, postData);
+    this.postForm.reset();
+    this.imgSrc = './assets/placeholder-image.png';
+  }
 }

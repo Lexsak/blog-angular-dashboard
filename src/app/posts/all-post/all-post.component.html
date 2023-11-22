@@ -1,15 +1,67 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card shadow-effect bg-secondary-theme">
-                <div class="card-body text-center">
-                    <h3 class="text-theme-center">All Blog Posts</h3>
-                    <p>From here you can manage your blog posts.</p>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-effect bg-secondary-theme">
+        <div class="card-body text-center">
+          <h3 class="text-theme-center">All Blog Posts</h3>
+          <p>From here you can manage your blog posts.</p>
 
-                    <button class="btn btn-success bg-theme" routerLink="/posts/new">Add New Post</button>
-                    <button class="btn btn-warning bg-theme ml-2" routerLink="/">Back to Dashboard</button>
-                </div>
-            </div>
+          <button class="btn btn-success bg-theme" routerLink="/posts/new">
+            Add New Post
+          </button>
+          <button class="btn btn-warning bg-theme ml-2" routerLink="/">
+            Back to Dashboard
+          </button>
         </div>
+      </div>
     </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="card shadow-effect">
+        <div class="card-body">
+          <table class="table row-border hover">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Post Image</th>
+                <th>Title</th>
+                <th>Excerpt</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let post of postArray; let i = index">
+                <td style="max-width: 10px">{{ i + 1 }}</td>
+                <td style="width: 150px">
+                  <img
+                    src="{{ post.data.postImgPath }}"
+                    class="img img-fluid"
+                  />
+                </td>
+                <td style="max-width: 200px">{{ post.data.title }}</td>
+                <td style="max-width: 200px">{{ post.data.exerpt }}</td>
+                <td>{{ post.data.category.category }}</td>
+                <td>{{ post.data.createdAt.toMillis() | date }}</td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-success mr-2"
+                    routerLink="/posts/new"
+                    [queryParams]="{id: post.id}"
+                  >
+                    Edit
+                  </button>
+                  <button class="btn btn-sm btn-danger">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
