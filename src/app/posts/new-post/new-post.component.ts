@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Post } from 'src/app/models/post';
 import { CategoriesService } from 'src/app/services/categories.service';
+import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
   selector: 'app-new-post',
@@ -18,7 +20,8 @@ export class NewPostComponent implements OnInit {
 
   constructor(
     private categoryService: CategoriesService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private postSerivce: PostsService
   ) {
     this.postForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(10)]],
@@ -36,8 +39,8 @@ export class NewPostComponent implements OnInit {
     });
   }
 
-  get fc(){
-    return this.postForm.controls
+  get fc() {
+    return this.postForm.controls;
   }
 
   onTitleChanged() {
@@ -56,4 +59,29 @@ export class NewPostComponent implements OnInit {
     reader.readAsDataURL($event?.target.files[0]);
     this.selectedImg = $event.target.files[0];
   }
+
+  onSubmit(){
+    console.log(this.postForm.value);
+
+    let splitted = this.postForm.value.category.split('-');
+    
+
+    const postData: Post = {
+      title: this.postForm.value.title,
+      permalink: this.postForm.value.permalink,
+      category: {
+        categoryId: splitted[0],
+        category: splitted[1],
+      },
+      postImgPath: '',
+      exerpt: this.postForm.value.exerpt,
+      content: this.postForm.value.content,
+      isFeatured: false,
+      views: 0,
+      status: 'new',
+      createdAt: new Date(),
+    };
+    
+    this.postSerivce.uploadImage(this.selectedImg)
+  };
 }

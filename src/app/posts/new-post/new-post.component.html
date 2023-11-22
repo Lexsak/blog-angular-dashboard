@@ -6,7 +6,7 @@
     </div>
   </div>
 
-  <form [formGroup]="postForm">
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-md-7">
         <div class="card shadow-effect">
@@ -64,7 +64,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Exerpt</label>
+              <label>Excerpt</label>
               <textarea
                 cols="30"
                 rows="10"
@@ -81,7 +81,7 @@
                   class="alert alert-danger"
                   *ngIf="fc['exerpt'].touched && fc['exerpt'].invalid"
                 >
-                  Exerpt is required
+                  Excerpt is required
                 </div>
               </div>
               <div *ngIf="fc['exerpt'].errors?.hasOwnProperty('minlength')">
@@ -89,7 +89,7 @@
                   class="alert alert-danger"
                   *ngIf="fc['exerpt'].touched && fc['exerpt'].invalid"
                 >
-                  Exerpt must be atleast 50 charectors long.
+                  Excerpt must be atleast 50 charectors long.
                 </div>
               </div>
             </div>
@@ -110,7 +110,7 @@
             <option value="selectCategory" disabled>
               Please select a category
             </option>
-            <option *ngFor="let category of categories">
+            <option *ngFor="let category of categories" value="{{ category.id }}-{{ category.data.category }}">
               {{ category.data.category }}
             </option>
           </select>
@@ -177,7 +177,7 @@
           </div>
         </div>
         <div class="col-md-12 text-center mb-5 mt-3">
-          <button class="btn btn-success bg-theme">Save Post</button>
+          <button class="btn btn-success bg-theme" [disabled]="postForm.invalid">Save Post</button>
           <button class="btn btn-warning ml-3" routerLink="/posts">
             Back to Post
           </button>
