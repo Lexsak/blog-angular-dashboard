@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
@@ -13,7 +14,21 @@ export class NewPostComponent implements OnInit {
 
   categories: any = [];
 
-  constructor(private categoryService: CategoriesService) {}
+  postForm: FormGroup;
+
+  constructor(
+    private categoryService: CategoriesService,
+    private fb: FormBuilder
+  ) {
+    this.postForm = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(10)]],
+      permalink: ['', Validators.required],
+      exerpt: ['', [Validators.required, Validators.minLength(50)]],
+      category: ['', Validators.required],
+      postImg: ['', Validators.required],
+      content: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     this.categoryService.loadData().subscribe((val) => {
@@ -21,9 +36,15 @@ export class NewPostComponent implements OnInit {
     });
   }
 
-  onTitleChanged($event: any) {
-    const title = $event.target.value;
-    this.permalink = title.replace(/\s/g, '-');
+  get fc(){
+    return this.postForm.controls
+  }
+
+  onTitleChanged() {
+    this.postForm.get('title')?.valueChanges.subscribe((title) => {
+      this.permalink = title.replace(/\s/g, '-');
+      this.postForm.get('permalink')?.setValue(this.permalink);
+    });
   }
 
   showPreview($event: any) {
