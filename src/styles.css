@@ -86,7 +86,7 @@ body{
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-input[type = text], input[type = email]{
+input[type = text], input[type = email], input[type = password]{
     height: 60px;
     padding-left: 20px;
     font-size: 14px;

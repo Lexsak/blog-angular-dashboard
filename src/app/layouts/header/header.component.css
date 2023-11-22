@@ -9,4 +9,11 @@ header{
     color: var(--primary-color);
     font-size: 1.5em;
     cursor: pointer;
+    text-decoration: none;
+    transition: all .5s ease-in-out;
+}
+
+.logo:hover{
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
 }
