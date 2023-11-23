@@ -7,7 +7,7 @@
     </div>
 
     <div class="container justify-content-center" *ngIf="isLoggedIn$ | async">
-        <a class="email-text mr-3" >{{userEmail}}</a>
+        <a class="email-text mr-3" >Hello Admin!</a>
         <button class="btn btn-sm btn-success" (click)="onLogOut()">Logout</button>
     </div>
 </header>

@@ -2,7 +2,7 @@ header{
     height: 100px;
 }
 
-.logo{
+.logo, .btn{
     padding: 8px 24px;
     border-radius: 20px;
     background-color: var(--secondary-color);
@@ -21,16 +21,9 @@ header{
 }
 
 .btn{
-    padding: 8px 24px;
     border: none;
-    border-radius: 20px;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    font-size: 1.5em;
-    letter-spacing: 1px;
+    border-radius: 10px;
     cursor: pointer;
-    text-decoration: none;
-    transition: all .5s ease-in-out;
 }
 .btn:hover{
     background-color: var(--primary-color);
