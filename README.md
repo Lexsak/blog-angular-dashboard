@@ -1,27 +1,41 @@
-# BlogAngDashboard
+# Blog Angular Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.9.
+Blog Angular Dashboard is the administrative panel for managing the content of the [Blog Angular](https://github.com/Lexsak/blog-angular-dashboard) web application. This Firebase-powered dashboard allows seamless handling of blog categories, posts, and newsletter subscribers.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Firebase Authentication**: Utilizes Firebase for secure user authentication.
 
-## Code scaffolding
+- **Category Management**: Admin can add, edit, or delete categories, and changes are automatically reflected on the main blog page.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Post Management**: Admin can view, modify, and delete blog posts. Additionally, he can mark posts as featured or remove the featured status.
 
-## Build
+- **New Post Creation**: Admin can create new blog posts by filling out a form that includes fields for image, title, content, and category selection.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Subscriber Management**: Admin has access to all newsletter subscribers and can delete subscribers if necessary.
 
-## Running unit tests
+## Screenshots
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Here are some screenshots illustrating the key features of the Blog Angular Dashboard:
 
-## Running end-to-end tests
+### Login Page
+![image](https://github.com/Lexsak/blog-angular-dashboard/assets/143490317/eeee8399-6087-467f-8339-ef07341a0a70)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Admin Dashboard
+![image](https://github.com/Lexsak/blog-angular-dashboard/assets/143490317/842db624-75a7-4001-a865-f79c8f3cca73)
 
-## Further help
+### Category Management
+![image](https://github.com/Lexsak/blog-angular-dashboard/assets/143490317/2cb529d6-f096-4c4b-817b-c9d3c014cf60)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Post Management
+![image](https://github.com/Lexsak/blog-angular-dashboard/assets/143490317/92bb5b66-9b74-4fa5-a91f-9f649ce954a0)
+
+### Add New Post
+![image](https://github.com/Lexsak/blog-angular-dashboard/assets/143490317/0b074e29-886a-4b1d-a034-be7ae22cecb3)
+
+### Edit Post
+![image](https://github.com/Lexsak/blog-angular-dashboard/assets/143490317/e06670ee-9b8a-4e51-a12b-f51d2f964ab3)
+
+### Subscribers Managment
+![image](https://github.com/Lexsak/blog-angular-dashboard/assets/143490317/1bc37c5c-4fc8-486c-ae0f-b588f37af421)
+
