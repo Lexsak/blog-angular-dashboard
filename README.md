@@ -1,6 +1,6 @@
 # Blog Angular Dashboard
 
-Blog Angular Dashboard is the administrative panel for managing the content of the [Blog Angular](https://github.com/Lexsak/blog-angular-dashboard) web application. This Firebase-powered dashboard allows seamless handling of blog categories, posts, and newsletter subscribers.
+Blog Angular Dashboard is the administrative panel for managing the content of the [Blog Angular](https://github.com/Lexsak/blog-angular) web application. This Firebase-powered dashboard allows seamless handling of blog categories, posts, and newsletter subscribers.
 
 ## Features
 
